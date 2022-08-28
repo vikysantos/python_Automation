@@ -24,7 +24,7 @@ navegadorFormulario.find_element(By.NAME, '683932969').send_keys("Sei automatiza
 
 
 #Preenche Radio Button Feminino
-navegadorFormulario.find_element(By.NAME, '683931881_4497366119_label').click()
+navegadorFormulario.find_element(By.ID, '683931881_4497366119_label').click()
 
 #Aguardar para o computador processar as informações
 tempoEspera.sleep(6)
