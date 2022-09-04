@@ -1,3 +1,5 @@
+from openpyxl import load_workbook
+import os
 
 from selenium import webdriver as opcoesSelenium
 from selenium.webdriver.common.keys import Keys
@@ -7,30 +9,171 @@ import pyautogui as tempoEspera
 navegadorFormulario = opcoesSelenium.Chrome()
 navegadorFormulario.get("https://docs.google.com/forms/d/1rIkOjyUfP38URARPEVNDKUT09Q4BaNn0m_Hr8K1R24E/viewform?edit_requested=true")
 
-#Aguardar para o computador processar as informações
-tempoEspera.sleep(6)
+    
+nomeCaminhoArquivo = "C:\\Users\vital\OneDrive\Ambiente de Trabalho\python\formulario_dados.ods"
+planilha_aberta = load_workbook(filename=nomeCaminhoArquivo)
 
-#Preenche Nome
-navegadorFormulario.find_element(By.NAME, '683928983').send_keys("Nicole Ferreira")
+#Seleciona a sheet que tem as informações a serem passadas para o formulario on-line
+sheet_selecionada = planilha_aberta['Dados']
 
-#Preenche Email
-navegadorFormulario.find_element(By.NAME, '683932318').send_keys("nicole.ferreira@gmail.com")
+for linha in range(2, len(sheet_selecionada['A']) + 1):
+    
+    idade = sheet_selecionada['A%s' % linha].value
+    sexo = sheet_selecionada['A%s' % linha].value
+    ano = sheet_selecionada['B%s' % linha].value
+    grau = sheet_selecionada['C%s' % linha].value
+    curso = sheet_selecionada['D%s' % linha].value
+    vantagens = sheet_selecionada['E%s' % linha].value
+    conhecimento = sheet_selecionada['F%s' % linha].value
+    consumo = sheet_selecionada['G%s' % linha].value
+    suplemento = sheet_selecionada['H%s' % linha].value
+    frequencia = sheet_selecionada['I%s' % linha].value
+    recomendacao = sheet_selecionada['J%s' % linha].value
+    motivo = sheet_selecionada['L%s' % linha].value
+    habito = sheet_selecionada['M%s' % linha].value
+    inicio = sheet_selecionada['N%s' % linha].value
+    pandemia = sheet_selecionada['O%s' % linha].value
 
-#Preenche Telefone
-navegadorFormulario.find_element(By.NAME, '683930688').send_keys("(11) 11111 - 1111")
+    #Aguardar para o computador processar as informações
+    tempoEspera.sleep(6)
 
-#Preenche Sobre
-navegadorFormulario.find_element(By.NAME, '683932969').send_keys("Sei automatizar processos e planilhas com Python")
+    #Preenche Idade
+    navegadorFormulario.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[2]/div[2]/div/div/div[2]/div/div[1]/div/div[1]/input').send_keys(idade)
+
+    #Preenche sexo
+    if sexo == "Masculino":
+        
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i11"]/div[3]/div').click()
+    else:
+
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i14"]/div[3]/div').click()
+    
+    #Preenche Grau Academico    
+    if grau == "Licenciatura":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i21"]/div[3]/div').click()
+    else:
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i24"]/div[3]/div').click()
+        
+    #Preenche Curso que frequenta
+    if curso == "Ciências Biomédicas e Laboratoriais":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i31"]/div[3]/div').click()
+    elif curso == "Dietética e nutrição":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i34"]/div[3]/div').click()
+    elif curso == "Enfermagem":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i37"]/div[3]/div').click()
+    elif curso == "Farmácia":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i40"]/div[3]/div').click()
+    elif curso == "Gerontologia":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i43"]/div[3]/div').click()        
+    
+    #Preenche Ano que frequenta
+    if ano == "1º Ano":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i50"]/div[3]/div/div').click()
+    elif ano == "2º Ano":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i53"]/div[3]/div').click()
+    elif ano == "3º Ano":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i56"]/div[3]/div').click()
+    elif ano == "4º Ano":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i59"]/div[3]/div').click()
+    
+    #Preenche as vantagens de reforçar o sistema imunitário
+    if vantagens == "sim":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i68"]/div[3]/div/div').click()
+    elif vantagens == "não":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i71"]/div[3]/div').click()
+        
+     #Preenche conhecimento sobre os suplementos alimentares para o reforço do sistema imunitário
+    if conhecimento == "sim":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i78"]/div[3]/div').click()
+    elif conhecimento == "não":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i81"]/div[3]/div').click()
 
 
-#Preenche Radio Button Feminino
-navegadorFormulario.find_element(By.NAME, '683931881_4497366119_label').click()
+    #Preenche Ano que frequenta
+    if consumo == "Consumo":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i88"]/div[3]/div').click()
+    elif consumo == "Já consumi":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i91"]/div[3]/div').click()
+    elif consumo == "Nunca consumi":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i94"]/div[3]/div/div').click()
 
-#Aguardar para o computador processar as informações
-tempoEspera.sleep(6)
+    #Preenche já consumiu ou consome, selecione qual ou quais os suplementos alimentares que utiliza ou utilizou para o reforço do sistema imunitário
+    if suplemento == "Vitacê® (contém vitamina C)":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i104"]/div[2]').click()
+    elif suplemento == "Naturmil® (contém zinco)":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i107"]/div[2]').click()
+    elif suplemento == "Vitodê® (contém Vitamina D)":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i110"]/div[2]').click()
+    elif suplemento == "Novasol® (contém curcumina e Vitamina D3)":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i113"]/div[2]').click()
+    elif suplemento == "Gama Absorvit® (contém Selénio e Vitamina C)":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i116"]/div[2]').click()   
+    elif suplemento == "Redoxon® (vitamina C e selénio)":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i119"]/div[2]').click()
+    elif suplemento == "Magnesona® (contém Magnésio)":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i122"]/div[2]').click()   
+    elif suplemento == "Outros":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i125"]/div[2]').click()   
 
-#Clica para enviar as informações
-navegadorFormulario.find_element(By.XPATH, '//*[@id="patas"]/main/article/section/form/div[2]/button').click()
+    #Preenche  frequência consome suplementos alimentares para o reforço de sistema imunitário
+    if frequencia == "Ano inteiro":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i136"]/div[3]/div').click()
+    elif frequencia == "Apenas numa determinada época do ano":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i139"]/div[3]/div/div').click()
+        
+    #Preenche Quem recomendou a toma dos suplementos alimentares de reforço do sistema imunitário
+    if recomendacao == "Decisão própria":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i31"]/div[3]/div').click()
+    elif recomendacao == "Aconselhamento médico":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i149"]/div[3]/div').click()
+    elif recomendacao == "Aconselhamento Farmacêutico":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i152"]/div[3]/div').click()
+    elif recomendacao == "Recomendação de familiares ou amigos":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i155"]/div[3]/div').click()   
+    elif recomendacao == "Publicidades e Anúncios":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i158"]/div[3]/div').click()   
+    elif recomendacao == "Outros":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i161"]/div[3]/div').click()   
+    
+    #Preenche O que motivou a toma dos suplementos de reforço do sistema imunitário
+    if motivo == "Prevenção ou tratamento de doenças":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i173"]/div[3]').click()
+    elif motivo == "Ter mais energia energia":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i176"]/div[2]').click()
+    elif motivo == "Fortalecer o sistema imunitário":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i179"]/div[3]').click()
+    elif motivo == "Diminuir a ansiedade ou stress":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i182"]/div[2]').click()   
+    elif motivo == "Perder peso":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i185"]/div[2]').click()   
+    elif motivo == "Combater insónias":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i188"]/div[2]').click()
+    elif motivo == "Outros":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i191"]/div[3]').click()   
+    
+    #Preenche se já tem o habito de consumir suplementos alimentares para o reforço do sistema imunitário antes do inicio da pandemia por Covid-19 
+    if habito == "sim":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i204"]/div[3]/div').click()
+    elif habito == "não":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i207"]/div[3]/div').click()
+        
+    #Preenche se iciou o consumo de suplementos alimentares após o inicio da pandemia por Covid-19, com intuito diminuir as chances de infeção pelo virus
+    if inicio == "sim":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i214"]/div[3]/div').click()
+    elif inicio == "não":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i217"]/div[3]/div').click()
+        
+    #Preenche se com o surgimento da pandemia por Covid-19 a frequência com que consome suplementos alimentares para o reforço do sistema imunitário
+    if pandemia == "Aumentou":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i224"]/div[3]/div').click()
+    elif pandemia == "Diminuiu":
+        navegadorFormulario.find_element(By.XPATH, '//*[@id="i227"]/div[3]/div').click()
+    
+    #Aguardar para o computador processar as informações
+    tempoEspera.sleep(6)
+
+    #Clica para enviar as informações
+    navegadorFormulario.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span').click()
 
 
 
